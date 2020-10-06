@@ -36,27 +36,6 @@ function Saved() {
       .catch(err => console.log(err));
   }
 
-  // Handles updating component state when the user types into the input field
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setFormObject({ ...formObject, [name]: value })
-  };
-
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (formObject.title && formObject.author) {
-      API.saveBook({
-        title: formObject.title,
-        author: formObject.author,
-        synopsis: formObject.synopsis
-      })
-        .then(res => loadBooks())
-        .catch(err => console.log(err));
-    }
-  };
-
   return (
     <Container fluid>
       <Row>
@@ -65,7 +44,7 @@ function Saved() {
             <i className="fas fa-book fa-3x" ></i>
               <h1>Saved Books On My List</h1>
             </Jumbotron>
-            {books.length ? (
+            {/* {books.length ? (
               <List>
                 {books.map(book => (
                   <ListItem key={book._id}>
@@ -80,7 +59,7 @@ function Saved() {
               </List>
             ) : (
               <h3>No Results to Display</h3>
-            )}
+            )} */}
         </Col>
       </Row>
       <Footer/>

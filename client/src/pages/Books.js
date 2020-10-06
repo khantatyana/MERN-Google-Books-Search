@@ -4,54 +4,68 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
 import SearchForm from "../components/SearchForm";
 import Footer from "../components/Footer";
+import Card from "../components/Card";
 
 function Books() {
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([])
+  const [formObject, setFormObject] = useState({})
 
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!search) {
-      return;
-    }
+    // if (!search) {
+    //   return;
+    // }
 
-    API.fetchBooks(search)
-      .then(res => 
-
-        setBooks(res.data)
-
-        // if (res.data.length === 0) {
-        //   throw new Error("No results found.");
-        // }
-        // if (res.data.status === "error") {
-        //   throw new Error(res.data.message);
-        // }
+    API.fetchBooks("coding")
+      .then(res =>
+        setBooks(res.data.items)
       )
       .catch(err => setError(err));
-  }, [search]);
+  }, []);
 
   const handleInputChange = event => {
+    
     setSearch(event.target.value);
+
   };
   const handleFormSubmit = event => {
-
     event.preventDefault();
     console.log('Submitted');
     console.log(books);
     console.log(books.length);
+    API.fetchBooks(search)
+    .then(res =>
+      setBooks(res.data.items)
+    )
+    .catch(err => setError(err));
   };
+  const saveBook = event => {
+    event.preventDefault();
+    API.saveBook({
+      _id: formObject.id,
+      title: formObject.title,
+      link: formObject.link,
+      image: formObject.image,
+      author: formObject.author,
+      description: formObject.description
+    })
+    .then(res => {
+      setFormObject(res);
+    })
+    .catch(err => console.log(err));
+    
+  }
 
   return (
     <Container fluid>
       <Row>
         <Col size="md-12">
-          <Jumbotron>
-            <i className="fas fa-book fa-3x" ></i>
-            <h1>(React) Google Book Search</h1>
+          <Jumbotron>    
+            <h1> <i className="fas fa-book" ></i>(React) Google Book Search</h1>
             <p>Search for and Save Books of Interest</p>
             <SearchForm
               handleInputChange={handleInputChange}
@@ -62,21 +76,17 @@ function Books() {
             <br />
           </Jumbotron>
 
-          <Jumbotron>
-            <h2>Results</h2>
-
-          </Jumbotron>
           {books.length ? (
+
             <List>
+              <h1>Results</h1>
               {books.map(book => (
-                <ListItem key={book.id}>
-                  <Link to={"/books/" + book._id}>
-                    <strong>
-                      {book.volumeInfo.title} by {book.volumeInfo.authors}
-                    </strong>
-                  </Link>
-                  {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
-                </ListItem>
+                <Card 
+                key={book.id}
+                book={book}
+                saveBook={saveBook}
+                >
+                </Card>
               ))}
             </List>
           ) : (
@@ -88,6 +98,5 @@ function Books() {
     </Container>
   );
 }
-
 
 export default Books;

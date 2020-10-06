@@ -2,9 +2,8 @@ import React from "react";
 
 function SearchForm(props) {
   return (
-    <form onSubmit={props.handleFormSubmit}>
+    <form onSubmit={props.handleFormSubmit} >
       <div className="form-group">
-        <label htmlFor="search">Search:</label>
         <input
           onChange={props.handleInputChange}
           value={props.value}
@@ -13,8 +12,8 @@ function SearchForm(props) {
           className="form-control"
           placeholder="Search For a Book"
           id="search"
+          style={{width:"60%", alignItems:"center"}}
         />
-        <br />
         <br/>
         <button type="submit" className="btn btn-primary">
           Search
