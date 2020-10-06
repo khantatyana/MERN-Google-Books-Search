@@ -1,0 +1,14 @@
+.footer {
+    padding-top: 20px;
+    background-color: rgb(235, 104, 100);
+    color: honeydew;
+    height: 80px;
+    text-align: center;
+    position: fixed;
+    margin-top: -100px;
+    clear: both;
+    border-top: 2px dotted honeydew;
+    padding-bottom: 30px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 20px;
+}
