@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
-import SearchForm from "../components/SearchForm";
+import { List } from "../components/List";
 import Footer from "../components/Footer";
 
 function Saved() {
 
-  // Setting our component's initial state
   const [books, setBooks] = useState([])
-  const [formObject, setFormObject] = useState({})
   // Load all books and store them with setBooks
   useEffect(() => {
     loadBooks()
-    
   }, [])
 
   // Loads all books and sets them to books
@@ -40,32 +33,50 @@ function Saved() {
     <Container fluid>
       <Row>
         <Col size="md-12">
-            <Jumbotron>
+          <Jumbotron>
             <i className="fas fa-book fa-3x" ></i>
-              <h1>Saved Books On My List</h1>
-            </Jumbotron>
-            {/* {books.length ? (
-              <List>
-                {books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
-                      <strong>
-                        {book.title} by {book.author}
-                      </strong>
-                    </Link>
-                    <DeleteBtn onClick={() => deleteBook(book._id)} />
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
+            <h1>Saved Books On My List</h1>
+          </Jumbotron>
+          {books.length ? (
+            <List>
+              {books.map(book => (
+                <Row key={book._id}>
+                  <Col size="md-2">
+                    {book.link ? (
+                      <img src={book.image} alt="img" />
+                    ) : (<img src="" alt="" />)}
+                  </Col>
+                  <Col size="md-9">
+                    <div className="card-header">
+                      <a href={book.link} target="_blank">
+
+                        <strong>
+                          {book.title} by {book.author}
+                        </strong>
+                      </a>
+                    </div>
+                    <div className="card-body">{book.description}</div>
+                  </Col>
+                  <Col size="md-1">
+                    <a href={book.link} target="_blank">
+                      <button className="btn btn-primary">
+                        View  <i className="fas fa-external-link-alt"></i>
+                      </button>
+                    </a>
+                    <br /><br />
+                    <button type="button" className="btn btn-primary" onClick={() => deleteBook(book._id)}>Delete  <i className="far fa-trash-alt"></i></button>
+                  </Col>
+                </Row>
+              ))}
+            </List>
+          ) : (
               <h3>No Results to Display</h3>
-            )} */}
+            )}
         </Col>
       </Row>
-      <Footer/>
+      <Footer />
     </Container>
   );
 }
-
 
 export default Saved;

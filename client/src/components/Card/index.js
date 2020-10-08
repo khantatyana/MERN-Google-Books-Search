@@ -45,7 +45,6 @@ function Card({ book }) {
                         </button>
                     </a>
                     <br /><br />
-                    {/* <button className="btn btn-primary" onClick={(e) => saveBook(e)}>Save  <i className="fas fa-bookmark"></i></button> */}
                     <button type="button" className="btn btn-primary" onClick={saveBooks}>Save  <i className="fas fa-bookmark"></i></button>
                 </Col>
             </Row>

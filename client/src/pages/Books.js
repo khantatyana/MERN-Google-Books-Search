@@ -14,7 +14,6 @@ function Books() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-
     API.fetchBooks("coding")
       .then(res =>
         setBooks(res.data.items)
@@ -25,6 +24,7 @@ function Books() {
   const handleInputChange = event => {
     setSearch(event.target.value);
   };
+  
   const handleFormSubmit = event => {
     event.preventDefault();
     console.log('Submitted');
@@ -36,21 +36,6 @@ function Books() {
     )
     .catch(err => setError(err));
   };
-  // const saveBook = event => {
-  //   event.preventDefault();
-  //   API.saveBook({
-  //     _id: formObject.id,
-  //     title: formObject.title,
-  //     link: formObject.link,
-  //     image: formObject.image,
-  //     author: formObject.author,
-  //     description: formObject.description
-  //   })
-  //   .then(res => {
-  //     // setFormObject(res);
-  //   })
-  //   .catch(err => console.log(err));
-  // }
 
   return (
     <Container fluid>
@@ -74,7 +59,6 @@ function Books() {
                 <Card 
                 key={book.id}
                 book={book}
-                // saveBook={saveBook}
                 >
                 </Card>
               ))}
