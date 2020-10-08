@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
+import { List } from "../components/List";
 import SearchForm from "../components/SearchForm";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
@@ -11,14 +10,10 @@ import Card from "../components/Card";
 function Books() {
   const [search, setSearch] = useState("");
   const [books, setBooks] = useState([])
-  const [formObject, setFormObject] = useState({})
-
+  // const [formObject, setFormObject] = useState({})
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // if (!search) {
-    //   return;
-    // }
 
     API.fetchBooks("coding")
       .then(res =>
@@ -28,9 +23,7 @@ function Books() {
   }, []);
 
   const handleInputChange = event => {
-    
     setSearch(event.target.value);
-
   };
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -43,22 +36,21 @@ function Books() {
     )
     .catch(err => setError(err));
   };
-  const saveBook = event => {
-    event.preventDefault();
-    API.saveBook({
-      _id: formObject.id,
-      title: formObject.title,
-      link: formObject.link,
-      image: formObject.image,
-      author: formObject.author,
-      description: formObject.description
-    })
-    .then(res => {
-      setFormObject(res);
-    })
-    .catch(err => console.log(err));
-    
-  }
+  // const saveBook = event => {
+  //   event.preventDefault();
+  //   API.saveBook({
+  //     _id: formObject.id,
+  //     title: formObject.title,
+  //     link: formObject.link,
+  //     image: formObject.image,
+  //     author: formObject.author,
+  //     description: formObject.description
+  //   })
+  //   .then(res => {
+  //     // setFormObject(res);
+  //   })
+  //   .catch(err => console.log(err));
+  // }
 
   return (
     <Container fluid>
@@ -75,16 +67,14 @@ function Books() {
             <br />
             <br />
           </Jumbotron>
-
           {books.length ? (
-
             <List>
               <h1>Results</h1>
               {books.map(book => (
                 <Card 
                 key={book.id}
                 book={book}
-                saveBook={saveBook}
+                // saveBook={saveBook}
                 >
                 </Card>
               ))}

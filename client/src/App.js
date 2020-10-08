@@ -8,14 +8,12 @@ import Nav from "./components/Nav";
 function App() {
   return (
     <Router>
-
         <Nav />
         <Switch>
-          <Route exact path={["/", "/books"]} component={Books} />
+          <Route exact path={["/", "/search"]} component={Books} />
           <Route exact path="/saved" component={Saved} />
           <Route component={NoMatch} />
         </Switch>
-
     </Router>
   );
 }

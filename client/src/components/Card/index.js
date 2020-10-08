@@ -1,15 +1,31 @@
 import React from "react";
 import { Col, Row, Container } from "../Grid";
 import "./style.css";
+import API from "../../utils/API";
 
-function Card({ book, saveBook }) {
+function Card({ book }) {
+    const saveBooks = (event) => {
+        event.preventDefault();
+        API.saveBook({    
+          author: book.volumeInfo.authors,
+          description: book.volumeInfo.description,
+          image: book.volumeInfo.imageLinks.thumbnail,
+          link: book.volumeInfo.previewLink,    
+          title: book.volumeInfo.title
+        })
+        .then(() => {
+          // setFormObject(res);
+          alert("Saved " + book.volumeInfo.title + "!")
+        })
+        .catch(err => console.log(err));
+      }
     return (
         <Container className="card text-center" key={book.id}>
             <Row>
                 <Col size="md-2">
                     {book.volumeInfo.imageLinks.thumbnail ? (
                         <img src={book.volumeInfo.imageLinks.thumbnail} alt="img" />
-                    ) : (<img src="" />)}
+                    ) : (<img src="" alt="" />)}
                 </Col>
                 <Col size="md-9">
                     <div className="card-header">
@@ -29,7 +45,8 @@ function Card({ book, saveBook }) {
                         </button>
                     </a>
                     <br /><br />
-                    <button className="btn btn-primary" onClick={(e) => saveBook(e)}>Save  <i className="fas fa-bookmark"></i></button>
+                    {/* <button className="btn btn-primary" onClick={(e) => saveBook(e)}>Save  <i className="fas fa-bookmark"></i></button> */}
+                    <button type="button" className="btn btn-primary" onClick={saveBooks}>Save  <i className="fas fa-bookmark"></i></button>
                 </Col>
             </Row>
 
